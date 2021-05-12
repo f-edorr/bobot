@@ -1,7 +1,7 @@
 from aiogram import types
-from loader import dp, bot
-from states import Story
-from .sql import update
+from telegram_bot.loader import dp, bot
+from telegram_bot.states import Story
+from telegram_bot.handlers.sql import update
 from aiogram.dispatcher.filters import Text
 
 
