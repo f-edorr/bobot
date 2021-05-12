@@ -13,7 +13,7 @@ def update(user_id, apples=0, moneys=0, health=0, level=0, inventory=False, weap
     :param weapon:
     :return:
     """
-    with sql.connect('data.db') as conn:
+    with sql.connect('db.sqlite3') as conn:
         cur = conn.cursor()
         cur.execute('SELECT * FROM users WHERE user_id=?', (user_id,))
         user_data = list(cur.fetchone())

@@ -33,7 +33,7 @@ async def gender(call: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     data = (call.message.from_user.id, data['name'], data['gender'], 0, 0, 0, 0, '', '')
     print(data)
-    with sql.connect('data.db') as conn:
+    with sql.connect('db.sqlite3') as conn:
         cur = conn.cursor()
         # cur.execute('CREATE TABLE IF NOT EXISTS '
         #             'users(user_id INT, name TEXT, gender BOOL, apples INT, moneys INT, '
