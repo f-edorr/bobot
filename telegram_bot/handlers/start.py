@@ -1,6 +1,6 @@
 from aiogram import types
-from loader import dp
-from states import Main
+from telegram_bot.loader import dp
+from telegram_bot.states import Main
 from aiogram.dispatcher import FSMContext
 import sqlite3 as sql
 from .main import start_story
@@ -31,9 +31,9 @@ async def gender(call: types.CallbackQuery, state: FSMContext):
         'gender': int(call.data),
     })
     data = await state.get_data()
-    data = (call.message.from_user.id, data['name'], data['gender'], 0, 0, 0, 0, '', '')
+    data = (call.from_user.id, data['name'], data['gender'], 0, 0, 0, 0, '', '')
     print(data)
-    with sql.connect('data.db') as conn:
+    with sql.connect('db.sqlite3') as conn:
         cur = conn.cursor()
         # cur.execute('CREATE TABLE IF NOT EXISTS '
         #             'users(user_id INT, name TEXT, gender BOOL, apples INT, moneys INT, '
