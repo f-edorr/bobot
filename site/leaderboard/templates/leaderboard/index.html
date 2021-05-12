@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="h1"> Таблица лидеров игры «Bob kvest»</div>
+        <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Яблоки🍎</th>
+                <th scope="col">Деньги💰</th>
+                <th scope="col">Здоровье❤</th>
+                <th scope="col">Уровень⬆</th>
+                <th scope="col">Инвентарь🎒</th>
+                <th scope="col">Оружие⚔</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for heroes in heroes_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ heroes.name }}</td>
+                    <td>{{ heroes.apples }}</td>
+                    <td>{{ heroes.moneys }}</td>
+                    <td>{{ heroes.health }}</td>
+                    <td>{{ heroes.level }}</td>
+                    <td>{{ heroes.inventory }}</td>
+                    <td>{{ heroes.weapon }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
