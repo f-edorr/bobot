@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 
 from leaderboard_app.models import Heroes
-from leaderboard_site.settings import BASE_DIR
+from leaderboard_site.settings import BASE_DIR1
 
 
 class LeaderView(ListView):
@@ -22,6 +22,6 @@ class LeaderView(ListView):
         return context
 
 
-def g(request):
-    print(BASE_DIR)
+def test_func_please(request):
+    print(BASE_DIR1)
     return HttpResponse('Бац')

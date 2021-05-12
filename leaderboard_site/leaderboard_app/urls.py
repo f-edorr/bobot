@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from leaderboard_app.views import LeaderView
-
+from leaderboard_app.views import LeaderView, test_func_please
 app_name = 'leaderboard'
 urlpatterns = [
     path('', LeaderView.as_view(), name='index'),
+    path('1/', test_func_please, name='index'),
     ]
