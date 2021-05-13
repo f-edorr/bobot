@@ -9,11 +9,24 @@ keyboard_start = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboa
 keyboard_start.add(types.KeyboardButton('дальше'),
                    types.KeyboardButton('информация'))
 
-# каждый раз копировать и заменять имя кейборд
-# вот types нужно добавлять если есть еще варианты
 keyboard_1 = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
 keyboard_1.add(types.KeyboardButton('да'),
                types.KeyboardButton('нет'),
+               types.KeyboardButton('информация'))
+
+keyboard_2 = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+keyboard_2.add(types.KeyboardButton('25'),
+               types.KeyboardButton('4'),
+               types.KeyboardButton('информация'))
+
+keyboard_3 = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+keyboard_3.add(types.KeyboardButton('чаща'),
+               types.KeyboardButton('поляна'),
+               types.KeyboardButton('информация'))
+
+keyboard_4 = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+keyboard_4.add(types.KeyboardButton('тромбоциты'),
+               types.KeyboardButton('эритроциты'),
                types.KeyboardButton('информация'))
 
 
@@ -22,7 +35,7 @@ async def start_story(message: types.Message):
     data = update(message.from_user.id)
 
 
-    text = f"""Привет {data[1]}!\n
+    text = f"""Привет {data[2]}!\n
             \tТы, наверное, ничего не помнишь. Давай я всё объясню.\n
             Ты - любознательный исследователь, изучающий мир. Не так давно ты забрёл в бескрайний лес,\n
             и не смог выбраться. Это место, полное загадок, очаровало тебя, и ты заходил всё дальше и дальше, пока\n
@@ -39,8 +52,10 @@ async def start_story(message: types.Message):
             \tХочешь найти свои украденные вещи? Хорошо, давай отправляться в путь.\n
             Осторожно, ночью здесь очень темно.\n
         """
-
-
+    #if data[2] == 1:
+    #    await bot.send_photo(message.chat.id, open('images\\main_male_.png'))
+    #else:
+    #    await bot.send_photo(message.chat.id, open('images\\main_fem_.png'))
     await message.answer(text, reply_markup=keyboard_start)
     await Story.state_1.set()
 
@@ -66,22 +81,22 @@ HP: {data[5]}, LV: {data[6]}, Кол-во яблок: {data[3]}, Кол-во м�
 Инвентарь: {data[7]}\n
 """)
 
-think = 'Кажется, надо хорошенько обдумать план действий. Реши головоломку, чтобы придумать, что делать.\n' + '#' * 50
-wrans = 'Неверный ответ. Попробуй ещё раз.'
+think = 'Кажется, надо хорошенько обдумать план действий. Реши головоломку, чтобы придумать, что делать.\n'
+wrans = 'Неверный ответ. Попробуй ещё раз.\nТебя атакуют! Ты теряешь 10 HP!\n'
 death = 0
 glade, thicket = 0, 0
 lake, hills = 0, 0
 left, right = 0, 0
 drg = 0
 grap = 0
-# вот это короче надо копировать для каждого этапа, заменять свои
+
+# яма
 @dp.message_handler(state=Story.state_1)
 async def state_1(message: types.Message):
 
     if message.text == 'дальше':
         #update(message.from_user.id, apples=2)
-        # следующий этап указать свою клавиатуру
-        # await bot.send_photo(message.chat.id, open('assets\\1.png'))
+        # await bot.send_photo(message.chat.id, open('images\\treasure_.png'))
         await message.answer(f"""Отлично! Я знал, что ты справишься!\n
                   \tТы шёл, разглядывая кусты вокруг. На них растёт множество ягод!\n
                   ...Кажется, они не съедобны. Пока всё же лучше держаться на яблоках.\n
@@ -98,20 +113,19 @@ async def state_1(message: types.Message):
         #await message.answer('State_2_text', reply_markup=keyboard_1)
         #await Story.state_2.set()
 
+#раскопка
 @dp.message_handler(state=Story.state_2)
 async def state_2(message: types.Message):
 
     if message.text == 'да':
-        #update(message.from_user.id, apples=2)
-        # следующий этап указать свою клавиатуру
+        # update(message.from_user.id, apples=2)
         # await bot.send_photo(message.chat.id, open('assets\\1.png'))
         await message.answer(f"""
         Ты начинаешь копать...\n
         \tПри совершении некоторых действий придётся хорошо подумать. Иногда это довольно сложно,\n
-        будто ты решаешь настоящую головоломку. Режим решения головоломки выделяется "#".\n\n', {think}
-        Правильный ответ на любую головоломку содержит одно слово или одно число. Числа нужно вводить цифрами)\n
+        будто ты решаешь настоящую головоломку.\n\n {think}\n
         Сколько лап у кота?\n
-        """, reply_markup=keyboard_1)
+        """, reply_markup=keyboard_2)
         await Story.state_3.set()
 
     elif message.text == 'нет':
@@ -119,16 +133,134 @@ async def state_2(message: types.Message):
                 Прости, что лишаю тебя выбора, но раскопка является частью обучения.\n
                 Ты начинаешь копать...\n
                 \tПри совершении некоторых действий придётся хорошо подумать. Иногда это довольно сложно,\n
-                будто ты решаешь настоящую головоломку. Режим решения головоломки выделяется "#".\n\n', {think}
-                Правильный ответ на любую головоломку содержит одно слово или одно число. Числа нужно вводить цифрами)\n
+                будто ты решаешь настоящую головоломку.\n\n {think}
                 Сколько лап у кота?\n
-                """, reply_markup=keyboard_1)
+                """, reply_markup=keyboard_2)
         await Story.state_3.set()
     elif message.text == 'информация':
         await info(message)
 
-    #else:
-        #неверно
-        #update(message.from_user.id, health=-2)
-        #await message.answer('State_2_text', reply_markup=keyboard_1)
-        #await Story.state_2.set()
+#сколько лап у кота
+@dp.message_handler(state=Story.state_3)
+async def state_3(message: types.Message):
+
+    if message.text == '4':
+        #update(message.from_user.id, apples=2)
+        # await bot.send_photo(message.chat.id, open('images\\treasure_.png'))
+        await message.answer(f"""Верно!\n
+        Ты получил: монетки х100, яблоки х1, деревянный меч\nТвой LV повысился!\n
+        \tПоздравляю, ты научился решать головоломки!\n
+        Ты откопал меч, яблоко и монетки! Теперь ты готов ко всему.\n
+        \tТы продолжил идти вперёд.\n
+        Ты добрался до большого старого дуба, словно из сказки. Дальше ты можешь пойти\n
+        на маленькую полянку, или в густую чащу. Куда направишься?\n
+        """, reply_markup=keyboard_3)
+        update(message.from_user.id, moneys=100)
+        update(message.from_user.id, apples=1)
+        update(message.from_user.id, weapon='деревянный меч')
+        update(message.from_user.id, level=1)
+        await Story.state_4.set()
+
+    elif message.text == 'информация':
+        await info(message)
+
+    elif message.text == '25':
+        await message.answer(wrans, reply_markup=keyboard_2)
+
+#поляна или чаща
+@dp.message_handler(state=Story.state_4)
+async def state_4(message: types.Message):
+
+    if message.text == 'чаща':
+        #update(message.from_user.id, apples=2)
+        #await bot.send_photo(message.chat.id, open('images\\bear.png'))
+        thicket = 1
+        await message.answer(f"""\tТы направился в густую чащу. Здесь темно, но путь освещает множество светлячков...\n
+        Вокруг деревьев и кустов распустились сказочные цветы. Стой, не срывай их! Пусть цветут дальше!\n
+        ...Что это, там, впереди? Кажется, это монстр!\n
+        Он выглядит как маленький медвежонок с рогами. Он такой милый! UwU\n
+        Секунду... Он пытается тебя убить!\n\n
+        \tЧтобы атаковать монстра, нужна верная тактика.\n {think}
+        """, reply_markup=keyboard_4)
+        await Story.state_5.set()
+
+    elif message.text == 'информация':
+        await info(message)
+
+    elif message.text == 'поляна':
+        glade = 1
+        # await bot.send_photo(message.chat.id, open('images\\bear.png'))
+        await message.answer(f"""\tТы направился к маленькой полянке. Здесь так тихо и красиво...\n
+                Нежные звуки сверчков манят уснуть... Эй! Не поддавайся!\n
+                ...Что это, там, впереди? Кажется, это монстр!\n
+                Он выглядит как маленький медвежонок с рогами. Он такой милый! UwU\n
+                Секунду... Он пытается тебя убить!\n\n
+                \tЧтобы атаковать монстра, нужна верная тактика.\n{think}
+                """, reply_markup=keyboard_4)
+        await Story.state_5.set()
+
+#медвежонок
+@dp.message_handler(state=Story.state_5)
+async def state_5(message: types.Message):
+
+    if message.text == 'тромбоциты':
+        update(message.from_user.id, apples=2)
+        if thicket:
+            await message.answer(f"""Верно!\n
+            Ты получил: монетки х200, яблоки х1, ромашка х1\n
+            Твой LV повысился!\n
+            Отдышавшись после битвы, ты заходишь всё дальше в лес...\n
+            """, reply_markup=keyboard_3)
+            update(message.from_user.id, moneys=200)
+            update(message.from_user.id, apples=1)
+            update(message.from_user.id, inventory=', ромашка')
+            update(message.from_user.id, level=1)
+        if glade:
+            await message.answer(f"""Верно!\n
+            Ты получил: монетки х100, яблоки х1, лилия х1\n
+            Прогулявшись по полянке, ты заходишь всё дальше в лес...\n
+            """, reply_markup=keyboard_3)
+            update(message.from_user.id, moneys=100)
+            update(message.from_user.id, apples=1)
+            update(message.from_user.id, inventory=', лилия')
+        await Story.state_6.set()
+
+    elif message.text == 'информация':
+        await info(message)
+
+    elif message.text == 'эритроциты':
+        update(message.from_user.id, health=-10)
+        await message.answer(wrans, reply_markup=keyboard_2)
+
+#забавный монстр
+@dp.message_handler(state=Story.state_5)
+async def state_5(message: types.Message):
+
+    if message.text == 'тромбоциты':
+        update(message.from_user.id, apples=2)
+        if thicket:
+            await message.answer(f"""Верно!\n
+            Ты получил: монетки х200, яблоки х1, ромашка х1\n
+            Твой LV повысился!\n
+            Отдышавшись после битвы, ты заходишь всё дальше в лес...\n
+            """, reply_markup=keyboard_3)
+            update(message.from_user.id, moneys=200)
+            update(message.from_user.id, apples=1)
+            update(message.from_user.id, inventory=', ромашка')
+            update(message.from_user.id, level=1)
+        if glade:
+            await message.answer(f"""Верно!\n
+            Ты получил: монетки х100, яблоки х1, лилия х1\n
+            Прогулявшись по полянке, ты заходишь всё дальше в лес...\n
+            """, reply_markup=keyboard_3)
+            update(message.from_user.id, moneys=100)
+            update(message.from_user.id, apples=1)
+            update(message.from_user.id, inventory=', лилия')
+        await Story.state_6.set()
+
+    elif message.text == 'информация':
+        await info(message)
+
+    elif message.text == 'эритроциты':
+        update(message.from_user.id, health=-10)
+        await message.answer(wrans, reply_markup=keyboard_2)

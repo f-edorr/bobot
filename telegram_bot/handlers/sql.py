@@ -1,5 +1,8 @@
 import sqlite3 as sql
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DB = BASE_DIR/'db.sqlite3'
 
 def update(user_id, apples=0, moneys=0, health=0, level=0, inventory=False, weapon=False):
     """
@@ -13,10 +16,11 @@ def update(user_id, apples=0, moneys=0, health=0, level=0, inventory=False, weap
     :param weapon:
     :return:
     """
-    with sql.connect('db.sqlite3') as conn:
+    with sql.connect(DB) as conn:
         cur = conn.cursor()
         cur.execute('SELECT * FROM users WHERE user_id=?', (user_id,))
         user_data = list(cur.fetchone())
+        print(user_data)
         user_data[3] += apples
         user_data[4] += moneys
         user_data[5] += health
@@ -26,5 +30,6 @@ def update(user_id, apples=0, moneys=0, health=0, level=0, inventory=False, weap
         if weapon:
             user_data[8] = weapon
         cur.execute('DELETE FROM users WHERE user_id=?', (user_id,))
-        cur.execute('INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);', user_data)
+        print(user_data)
+        cur.execute('INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);', user_data)
     return user_data
