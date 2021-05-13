@@ -16,18 +16,30 @@
             </tr>
             </thead>
             <tbody>
-            {% for heroes in heroes_list %}
-                <tr>
+<!--            {% for heroes in heroes_list %}-->
+<!--                <tr>-->
+<!--                    <th scope="row">{{ forloop.counter }}</th>-->
+<!--                    <td>{{ heroes.name }}</td>-->
+<!--                    <td>{{ heroes.apples }}</td>-->
+<!--                    <td>{{ heroes.moneys }}</td>-->
+<!--                    <td>{{ heroes.health }}</td>-->
+<!--                    <td>{{ heroes.level }}</td>-->
+<!--                    <td>{{ heroes.inventory }}</td>-->
+<!--                    <td>{{ heroes.weapon }}</td>-->
+<!--                </tr>-->
+<!--            {% endfor %}-->
+{% for heroes in heroes_many %}
+                            <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ heroes.name }}</td>
-                    <td>{{ heroes.apples }}</td>
-                    <td>{{ heroes.moneys }}</td>
-                    <td>{{ heroes.health }}</td>
-                    <td>{{ heroes.level }}</td>
-                    <td>{{ heroes.inventory }}</td>
-                    <td>{{ heroes.weapon }}</td>
+                    <td>{{ heroes.0 }}</td>
+                    <td>{{ heroes.1 }}</td>
+                    <td>{{ heroes.2 }}</td>
+                    <td>{{ heroes.3 }}</td>
+                    <td>{{ heroes.4 }}</td>
+                    <td>{{ heroes.6 }}</td>
+                    <td>{{ heroes.7 }}</td>
                 </tr>
-            {% endfor %}
+            {% endfor%}
             </tbody>
         </table>
     </div>
