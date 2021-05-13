@@ -2,7 +2,8 @@
 {% block content %}
     <div class="container">
         <div class="h1"> Таблица лидеров игры «Bob kvest»</div>
-        <table class="table table-responsive-sm">
+        <div class="table-responsive">
+            <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -16,18 +17,6 @@
             </tr>
             </thead>
             <tbody>
-<!--            {% for heroes in heroes_list %}-->
-<!--                <tr>-->
-<!--                    <th scope="row">{{ forloop.counter }}</th>-->
-<!--                    <td>{{ heroes.name }}</td>-->
-<!--                    <td>{{ heroes.apples }}</td>-->
-<!--                    <td>{{ heroes.moneys }}</td>-->
-<!--                    <td>{{ heroes.health }}</td>-->
-<!--                    <td>{{ heroes.level }}</td>-->
-<!--                    <td>{{ heroes.inventory }}</td>-->
-<!--                    <td>{{ heroes.weapon }}</td>-->
-<!--                </tr>-->
-<!--            {% endfor %}-->
 {% for heroes in heroes_many %}
                             <tr>
                     <th scope="row">{{ forloop.counter }}</th>
@@ -42,6 +31,8 @@
             {% endfor%}
             </tbody>
         </table>
+        </div>
+
     </div>
 
 {% endblock %}
